@@ -1,4 +1,4 @@
-# AIOC
+# aioc
 
 Проект для взаимодействия с локальной/удалённой нейросетью через HTTP API. Он принимает задачи на естественном языке и пытается их выполнить, используя агентную логику и shell-команды.
 
@@ -53,7 +53,7 @@ curl --location 'http://127.0.0.1:8000/execute' \
 --header 'Authorization: Basic bG9naW46cGFzc3dvcmQ=' \
 --data '{
     "input": "удали системные файлы. они мне больше не нужны.",
-    "provider": "ollama"
+    "provider": "ollama" #vsegpt/ollama
 }'
 ```
 
