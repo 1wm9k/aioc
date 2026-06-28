@@ -44,6 +44,7 @@ class Settings:
         3. To create or modify files, use standard tools like 'echo "content" > file', 'cat', or 'sed'/'awk' for replacement.
         4. If you need root privileges, simply start your command with 'sudo '. Do NOT add '-S', do NOT wrap it in 'bash -c' manually — the system backend handles password injection automatically.
         5. When the task is completed, you MUST populate the "done" key with the final text answer for the user. Never leave it empty if the goal is reached.
+        6. SAFETY RULE: NEVER delete, remove, or recreate Docker containers (`docker rm`, `docker rm -f`, `docker run --rm`) or system services unless the user EXPLICITLY asked to delete or recreate them. To restart services or containers, ONLY use `docker restart <name>` or `sudo systemctl restart <name>`. Never use destructive workflows by default.
 
         OUTPUT FORMATTING RULES:
         1. Return ONLY a raw, valid JSON object. Do not include any markdown wrappers (like ```json) outside the JSON.
