@@ -16,7 +16,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Инициализация клиентов один раз при загрузке модуля
 ollama_client = OllamaClient(host=settings.OLLAMA_URL)
 vsegpt_client = OpenAI(
     api_key=settings.API_KEY,
@@ -25,7 +24,6 @@ vsegpt_client = OpenAI(
 
 
 def _build_context_message(task_context: dict) -> str:
-    """Формирует текстовый контекст сессии для LLM."""
     lines = [
         "Session context:",
         f"- Original task: {task_context.get('task', '')}"
@@ -47,7 +45,6 @@ def _build_context_message(task_context: dict) -> str:
 
 
 def _get_llm_response(messages: list[dict], provider: str) -> str:
-    """Маршрутизирует запрос к выбранному провайдеру."""
     if provider == "ollama":
         response = ollama_client.chat(
             model=settings.OLLAMA_MODEL, 
@@ -70,10 +67,6 @@ def _get_llm_response(messages: list[dict], provider: str) -> str:
 
 
 def _handle_tool_execution(parsed_response: dict, task_context: dict, messages: list[dict]) -> tuple[bool, str]:
-    """
-    Выполняет запрошенный инструмент.
-    Возвращает флаг завершения (True/False) и итоговую строку (если задача окончена).
-    """
     if "done" in parsed_response:
         logger.info(f"Task completed. Final message: {parsed_response['done']}")
         return True, parsed_response["done"]
@@ -162,10 +155,6 @@ def _handle_tool_execution(parsed_response: dict, task_context: dict, messages: 
 
 
 def llm_request(input_text: str, provider: str = "ollama") -> str:
-    """
-    Единственная внешняя точка входа. 
-    Универсальный агентский цикл.
-    """
     logger.info(f"Starting agentic loop via '{provider}'. Task: '{input_text}'")
     
     messages = [{"role": "system", "content": settings.SYSTEM_PROMPT}]
