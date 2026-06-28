@@ -5,7 +5,7 @@ services:
     build: .
     container_name: aioc-app-container
     ports:
-      - "8000:80" # Маппинг портов (Хост:Контейнер)
+      - "8000:8000" # Маппинг портов (Хост:Контейнер)
     env_file:
       - .env
     extra_hosts:
